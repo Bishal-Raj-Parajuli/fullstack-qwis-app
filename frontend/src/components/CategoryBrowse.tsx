@@ -1,54 +1,22 @@
+import CategoryCard from "./CategoryCard"
+
+import { Categories } from "../mocks/data.ts";
+
 export default function CategoryBrowse() {
+
+    
+
+
   return (
     <section className="my-6 mx-4">
-        <h2 className="text-3xl text-secondary font-semibold leading-loose">Qwis Category</h2>
-        <div className="scroll-container grid grid-rows-2 grid-flow-col overflow-x-scroll gap-4 text-white p-4">
-            <div className="bg-primary rounded-lg shadow-md p-6 w-64 flex-shrink-0">
-                <div className=" flex items-center mb-4">
-                    <span className="text-2xl mr-2">🚀</span>
-                    <h2 className="text-xl font-bold">Kids</h2>
-                </div>
-                <p className="text-white">
-                    Blitz Time: 2 min
-                </p>
-            </div>
-            <div className="bg-primary rounded-lg shadow-md p-6 w-64 flex-shrink-0">
-                <div className=" flex items-center mb-4">
-                    <span className="text-2xl mr-2">🚀</span>
-                    <h2 className="text-xl font-bold">Web Tech</h2>
-                </div>
-                <p className="text-white">
-                    Blitz Time: 2 min
-                </p>
-            </div>
-            <div className="bg-primary rounded-lg shadow-md p-6 w-64 flex-shrink-0">
-                <div className=" flex items-center mb-4">
-                    <span className="text-2xl mr-2">🚀</span>
-                    <h2 className="text-xl font-bold">Java Script</h2>
-                </div>
-                <p className="text-white">
-                    Blitz Time: 2 min
-                </p>
-            </div>
-            <div className="bg-primary rounded-lg shadow-md p-6 w-64 flex-shrink-0">
-                <div className=" flex items-center mb-4">
-                    <span className="text-2xl mr-2">🚀</span>
-                    <h2 className="text-xl font-bold">React</h2>
-                </div>
-                <p className="text-white">
-                    Blitz Time: 2 min
-                </p>
-            </div>
-            <div className="bg-primary rounded-lg shadow-md p-6 w-64 flex-shrink-0">
-                <div className=" flex items-center mb-4">
-                    <span className="text-2xl mr-2">🚀</span>
-                    <h2 className="text-xl font-bold">Python</h2>
-                </div>
-                <p className="text-white">
-                    Blitz Time: 2 min
-                </p>
-            </div>
-            
+        <h2 className="text-3xl text-primary font-semibold">Qwis Category</h2>
+        <p className="font-extralight">Select a category to start playing.</p>
+        <div className="p-4 text-white grid grid-rows-2 grid-flow-col gap-4 place-content-start overflow-x-scroll">
+            {
+                Categories.map(data => {
+                    return <CategoryCard cardDetail={data} />
+                })
+            }
         </div>
     </section>
   )
