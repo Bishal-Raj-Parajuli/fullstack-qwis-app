@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Landing from './pages/Landing'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes/Root'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <Landing />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
