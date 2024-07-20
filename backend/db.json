@@ -1,0 +1,40 @@
+{
+    "User": [
+        {"id": 1, "name": "Alice Smith", "points": 950, "profileImg": "https://randomuser.me/api/portraits/women/1.jpg", "country": "USA"},
+        {"id": 2, "name": "Bob Johnson", "points": 860, "profileImg": "https://randomuser.me/api/portraits/men/2.jpg", "country": "Canada"},
+        {"id": 3, "name": "Charlie Brown", "points": 720, "profileImg": "https://randomuser.me/api/portraits/men/3.jpg", "country": "UK"},
+        {"id": 4, "name": "David Wilson", "points": 640, "profileImg": "https://randomuser.me/api/portraits/men/4.jpg", "country": "Australia"},
+        {"id": 5, "name": "Eva Davis", "points": 830, "profileImg": "https://randomuser.me/api/portraits/women/5.jpg", "country": "Germany"},
+        {"id": 6, "name": "Frank Miller", "points": 910, "profileImg": "https://randomuser.me/api/portraits/men/6.jpg", "country": "France"},
+        {"id": 7, "name": "Grace Lee", "points": 880, "profileImg": "https://randomuser.me/api/portraits/women/7.jpg", "country": "Japan"},
+        {"id": 8, "name": "Hannah White", "points": 770, "profileImg": "https://randomuser.me/api/portraits/women/8.jpg", "country": "China"},
+        {"id": 9, "name": "Ivan Harris", "points": 940, "profileImg": "https://randomuser.me/api/portraits/men/9.jpg", "country": "Brazil"},
+        {"id": 10, "name": "Jack Clark", "points": 760, "profileImg": "https://randomuser.me/api/portraits/men/10.jpg", "country": "India"},
+        {"id": 11, "name": "Kathy Lewis", "points": 800, "profileImg": "https://randomuser.me/api/portraits/women/11.jpg", "country": "Mexico"},
+        {"id": 12, "name": "Liam Robinson", "points": 950, "profileImg": "https://randomuser.me/api/portraits/men/12.jpg", "country": "Italy"},
+        {"id": 13, "name": "Mia Walker", "points": 720, "profileImg": "https://randomuser.me/api/portraits/women/13.jpg", "country": "Spain"},
+        {"id": 14, "name": "Noah Young", "points": 660, "profileImg": "https://randomuser.me/api/portraits/men/14.jpg", "country": "South Africa"},
+        {"id": 15, "name": "Olivia Hall", "points": 880, "profileImg": "https://randomuser.me/api/portraits/women/15.jpg", "country": "New Zealand"},
+        {"id": 16, "name": "Paul Allen", "points": 740, "profileImg": "https://randomuser.me/api/portraits/men/16.jpg", "country": "Netherlands"},
+        {"id": 17, "name": "Quincy King", "points": 870, "profileImg": "https://randomuser.me/api/portraits/men/17.jpg", "country": "Sweden"},
+        {"id": 18, "name": "Rachel Scott", "points": 900, "profileImg": "https://randomuser.me/api/portraits/women/18.jpg", "country": "Norway"},
+        {"id": 19, "name": "Sam Wright", "points": 730, "profileImg": "https://randomuser.me/api/portraits/men/19.jpg", "country": "Argentina"},
+        {"id": 20, "name": "Tina Baker", "points": 790, "profileImg": "https://randomuser.me/api/portraits/women/20.jpg", "country": "Portugal"}
+    ]
+    
+    ,
+    "categories": [
+        {"id": 1, "category": "Kids", "blitzTime": 3, "description": "Fun and educational questions for children. Perfect for young minds."},
+        {"id": 2, "category": "Science", "blitzTime": 3, "description": "Test your knowledge of scientific facts and discoveries. Explore the wonders of science."},
+        {"id": 3, "category": "History", "blitzTime": 4, "description": "Dive into the past with historical questions. Learn about significant events and figures."},
+        {"id": 4, "category": "Geography", "blitzTime": 3, "description": "Discover the world with geography questions. Test your knowledge of countries and landmarks."},
+        {"id": 5, "category": "Sports", "blitzTime": 2, "description": "Challenge your sports knowledge. Questions about various sports and famous athletes."},
+        {"id": 6, "category": "Music", "blitzTime": 3, "description": "Test your music trivia skills. Questions on different genres and famous musicians."},
+        {"id": 7, "category": "Movies", "blitzTime": 4, "description": "Explore the world of cinema. Questions on classic and contemporary movies."},
+        {"id": 8, "category": "Literature", "blitzTime": 5, "description": "Questions on famous books and authors. Test your literary knowledge."},
+        {"id": 9, "category": "Technology", "blitzTime": 3, "description": "Keep up with tech trends and innovations. Questions on gadgets, software, and pioneers."},
+        {"id": 10, "category": "General Knowledge", "blitzTime": 4, "description": "A mix of questions from various topics. Test your overall knowledge."}
+    ]
+    
+}
+  
