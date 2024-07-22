@@ -3,7 +3,7 @@ import { ICategory, IQuestion } from "../types";
 import { useEffect, useState } from "react";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
-import MainContentWrapper from "../components/common/MainContentWrapper";
+import Button from "../components/ui/Button";
 
 export default function Quiz() {
 
@@ -55,27 +55,39 @@ export default function Quiz() {
   return (
     <>
         <Navbar timer={true} />
-        <MainContentWrapper>
-            <div>
-                <h1 className="text-3x">Qwis {questionDone.length}</h1>
+            <div className="flex flex-col justify-center items-center h-screen">
+                <h1 className="text-3xl font-bold my-4">Qwis {questionDone.length}</h1>
+                <div>
                 {
                     currQuestion ? (
                         <>
-                            <h1>{currQuestion.title}</h1>
+                            <h1 className="text-2xl">{currQuestion.title}</h1>
+                            <div className="my-4">
                             {
                                 currQuestion && currQuestion.option.map(option => {
                                     return (
-                                        <p>{option.answer}</p>
+                                        <label key={option.id} className="flex items-center cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            className="form-checkbox h-5 w-5 text-blue-600"
+                                            name="quiz_question"
+                                        />
+                                        <span className="ml-2 text-lg">{option.answer}</span>
+                                        </label>
                                     )
                                 })
                             }
+                            </div>
+                            <div className="flex justify-center">
+                                <Button theme="primary" clickAction={() => setCurrentQuestion()} title="Next" />
+                            </div>
                         </>
                     ) : (
                         <h1>Loading ...</h1>
                     )
                 }
+                </div> 
             </div>
-        </MainContentWrapper>
         <Footer />
     </>
   )
