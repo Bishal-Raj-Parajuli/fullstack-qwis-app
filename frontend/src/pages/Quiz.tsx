@@ -4,14 +4,20 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import Button from "../components/ui/Button";
+import { toast, ToastContainer } from 'react-toastify';
+import LandingLayout from "../layouts/LandingLayout";
 
 export default function Quiz() {
 
 
     const {id} = useParams<{id: string}>()
+
+
     const [category, setCategory] = useState<ICategory | null>(null);
     const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
     const [questionDone, setQuestionDone] = useState<number[]>([])
+    const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
+    const [currentScore, setCurrentScore] = useState<number>(0);
 
     useEffect(() => {
         fetch(`http://localhost:3000/categories/${id}`)
@@ -44,6 +50,37 @@ export default function Quiz() {
         }
     }
 
+    function checkAnswer(){
+        if(selectedAnswerId){
+            if(currQuestion?.correctAnswer === selectedAnswerId){
+                setCurrentScore(prev => prev + 1)
+                toast.success('Correct!', {
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+            } else{
+                toast.error('Wrong!', {
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    });
+            }  
+        }
+        setCurrentQuestion();
+        setSelectedAnswerId(null);
+    }
+
     function getRandomElement(array: IQuestion[]) {
         const randomIndex = Math.floor(Math.random() * array.length);
         return { 
@@ -54,8 +91,9 @@ export default function Quiz() {
 
   return (
     <>
-        <Navbar timer={true} />
-            <div className="flex flex-col justify-center items-center h-screen">
+    <LandingLayout>
+        {/* <Navbar timer={true} /> */}
+            <div className="px-4 flex flex-col justify-center items-center h-screen">
                 <h1 className="text-3xl font-bold my-4">Qwis {questionDone.length}</h1>
                 <div>
                 {
@@ -71,6 +109,9 @@ export default function Quiz() {
                                             type="radio"
                                             className="form-checkbox h-5 w-5 text-blue-600"
                                             name="quiz_question"
+                                            value={option.id}
+                                            checked= {option.id === selectedAnswerId}
+                                            onChange={() => {setSelectedAnswerId(option.id)}}
                                         />
                                         <span className="ml-2 text-lg">{option.answer}</span>
                                         </label>
@@ -79,7 +120,7 @@ export default function Quiz() {
                             }
                             </div>
                             <div className="flex justify-center">
-                                <Button theme="primary" clickAction={() => setCurrentQuestion()} title="Next" />
+                                <Button theme="primary" clickAction={() => checkAnswer()} title="Next" />
                             </div>
                         </>
                     ) : (
@@ -87,8 +128,14 @@ export default function Quiz() {
                     )
                 }
                 </div> 
+
+                <div>
+                    <h1 className="text-1xl">Corrrect Answers: {currentScore}</h1>
+                </div>
+                <ToastContainer />
             </div>
-        <Footer />
+        {/* <Footer /> */}
+    </LandingLayout>
     </>
   )
 }

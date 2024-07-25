@@ -1,6 +1,5 @@
 import Logo from '../../assets/logo-text.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FaUser } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Button from '../ui/Button';
@@ -39,7 +38,7 @@ export default function Navbar({timer}: Props) {
               <Button theme='secondary' title={`Time: ${formatTime(time)}`} />
           ) : (
             <span className="h-10 w-10 rounded-full bg-accent text-white flex items-center justify-center">
-              <FontAwesomeIcon icon={faUser} />
+              <FaUser />
             </span>
           )
 
