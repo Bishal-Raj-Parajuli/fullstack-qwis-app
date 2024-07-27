@@ -103,11 +103,11 @@ export default function Quiz() {
                     currQuestion ? (
                         <>
                             <h1 className="text-2xl">{currQuestion.title}</h1>
-                            <div className="my-4">
+                            <div className="my-4 flex flex-col items-center">
                             {
                                 currQuestion && currQuestion.option.map(option => {
                                     return (
-                                        <label key={option.id} className="flex my-2 max-w-96 p-4 bg-secondary rounded-lg items-center cursor-pointer">
+                                        <label key={option.id} className="flex my-2 min-w-96 p-4 bg-secondary rounded-lg items-center cursor-pointer">
                                         <input
                                             type="radio"
                                             className="form-checkbox h-5 w-5 text-blue-600"
