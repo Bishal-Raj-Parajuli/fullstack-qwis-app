@@ -1,11 +1,13 @@
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { ICategory, IQuestion } from "../types";
 import { useEffect, useState } from "react";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import Button from "../components/ui/Button";
 import { toast, ToastContainer } from 'react-toastify';
-import {useQwisScore} from "../stores/QwisScore";
+import {useQwisScore, useQwisStatus} from "../stores/QwisScore";
+import Modal from "../components/ui/Modal";
+import { FaHome } from "react-icons/fa";
 
 export default function Quiz() {
 
@@ -17,7 +19,8 @@ export default function Quiz() {
     const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
     const [questionDone, setQuestionDone] = useState<number[]>([])
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
-    const {score, increaseScore} = useQwisScore();
+    const {score, setDefaultScore ,increaseScore} = useQwisScore();
+    const {timerStatus} = useQwisStatus();
 
     useEffect(() => {
         fetch(`http://localhost:3000/categories/${id}`)
@@ -120,7 +123,7 @@ export default function Quiz() {
                             }
                             </div>
                             <div className="flex justify-center">
-                                <Button theme="primary" clickAction={() => checkAnswer()} title="Next" />
+                                <Button theme="primary" onClick={() => checkAnswer()}>Next</Button>
                             </div>
                         </>
                     ) : (
@@ -135,6 +138,15 @@ export default function Quiz() {
                 <ToastContainer />
             </div>
         <Footer />
+
+        {
+            !timerStatus &&  <Modal>
+                <h1 className="text-3xl">Time's Up !!</h1>
+                <p>Your Score: {score}</p>
+                <Link to={'/'}><Button><FaHome className="mr-2" /> Home</Button></Link>
+             </Modal>
+        }
+       
     </>
   )
 }

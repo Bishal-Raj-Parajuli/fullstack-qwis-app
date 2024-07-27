@@ -8,9 +8,9 @@ export default function LandingHero() {
         <p className="font-light text-center my-4">Test your knowledge, challenge your freinds, and have fun with our wide range of quizzes.</p>
         <div className="flex my-2">
           <Link to={`/categories`}>
-            <Button title="Start Qwis" theme="primary"  />
+            <Button>Start Qwis</Button>
           </Link>
-            <Button title="Learn More" theme="secondary"  />
+            <Button theme="secondary">Learn More</Button>
         </div>
     </div>
   )

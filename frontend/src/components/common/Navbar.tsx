@@ -9,12 +9,10 @@ interface Props {
 
 
 export default function Navbar({timer}: Props) {
-
   
   return (
     <nav className='py-2 px-8 w-full bg-background top-0 flex justify-between items-center border-b-2 border-accent shadow-xl fixed '>
         <Link to={'/'}><img width={100} src={Logo} alt='logo' /></Link> 
-        
         {
           timer ? (
               <Timer />

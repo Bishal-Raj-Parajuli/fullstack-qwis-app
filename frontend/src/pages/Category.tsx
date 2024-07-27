@@ -29,7 +29,7 @@ export default function Category() {
                             <img width="200" src={Logo} />
                             <h1 className='text-6xl font-bold my-5'>{category.category}</h1>
                             <p className='my-5 text-justify'>{category.description}</p>
-                            <Link to={`/qwis/${category.id}`}><Button theme='primary' title='Start' /></Link>
+                            <Link to={`/qwis/${category.id}`}><Button>Start</Button></Link>
                         </>
                         :
                         <div>

@@ -1,10 +1,12 @@
+import React from "react"
+
 interface Props{
-    theme: 'primary' | 'secondary'
-    title: string
-    clickAction?: () => void
+    theme?: 'primary' | 'secondary'
+    children: React.ReactNode
+    onClick?: () => void
    
 }
-export default function Button({theme, title, clickAction}: Props){
+export default function Button({theme='primary', onClick, children}: Props){
 
   return (
     <>
@@ -14,10 +16,11 @@ export default function Button({theme, title, clickAction}: Props){
                 ? 'bg-primary text-dark' 
                 : 'bg-secondary text-dark'} 
             min-w-[150px] px-4 py-2 m-2 rounded-2xl font-medium
+            flex justify-center items-center
         `}
-    onClick={clickAction}
+    onClick={onClick}
     >
-        {title}
+        {children}
     </button>
     </>
   )
