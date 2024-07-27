@@ -10,16 +10,12 @@ import Modal from "../components/ui/Modal";
 import { FaHome } from "react-icons/fa";
 
 export default function Quiz() {
-
-
     const {id} = useParams<{id: string}>()
-
-
     const [category, setCategory] = useState<ICategory | null>(null);
     const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
     const [questionDone, setQuestionDone] = useState<number[]>([])
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
-    const {score, setDefaultScore ,increaseScore} = useQwisScore();
+    const {score ,increaseScore} = useQwisScore();
     const {timerStatus} = useQwisStatus();
 
     useEffect(() => {
@@ -34,6 +30,12 @@ export default function Quiz() {
     useEffect(() => {
         setCurrentQuestion()
     },[category])
+
+    useEffect(() => {
+        if(!timerStatus){
+            saveUserData();
+        }
+    },[timerStatus])
 
     function setCurrentQuestion(){
         if (category) {
@@ -91,7 +93,35 @@ export default function Quiz() {
             obj : array[randomIndex],
             index: randomIndex
         }
-      }
+    }
+
+    const saveUserData = async () => {
+        const userName = localStorage.getItem('userName')
+        const userCountry = localStorage.getItem('country')
+
+        // Post data to json-server
+        try {
+          const response = await fetch("http://localhost:3000/User", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                "id": 11, "name": userName, "points": score, "profileImg": "https://randomuser.me/api/portraits/women/1.jpg", "country": userCountry
+            }),
+          });
+    
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+    
+          const data = await response.json();
+          console.log("Posted data:", data);
+
+        } catch (error) {
+          console.error("Error posting data:", error);
+        }
+      };
 
   return (
     <>
