@@ -5,7 +5,7 @@ import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import Button from "../components/ui/Button";
 import { toast, ToastContainer } from 'react-toastify';
-import LandingLayout from "../layouts/LandingLayout";
+import {useQwisScore} from "../stores/QwisScore";
 
 export default function Quiz() {
 
@@ -17,7 +17,7 @@ export default function Quiz() {
     const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
     const [questionDone, setQuestionDone] = useState<number[]>([])
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
-    const [currentScore, setCurrentScore] = useState<number>(0);
+    const {score, increaseScore} = useQwisScore();
 
     useEffect(() => {
         fetch(`http://localhost:3000/categories/${id}`)
@@ -41,6 +41,7 @@ export default function Quiz() {
             } while (questionDone.includes(index) && questionDone.length < category.questions.length);
 
             if (questionDone.length === category.questions.length) {
+                // #TODO: All question is done end the game 
                 console.log("All questions have been done");
                 return;
             }
@@ -53,7 +54,7 @@ export default function Quiz() {
     function checkAnswer(){
         if(selectedAnswerId){
             if(currQuestion?.correctAnswer === selectedAnswerId){
-                setCurrentScore(prev => prev + 1)
+                increaseScore();
                 toast.success('Correct!', {
                     position: "bottom-center",
                     autoClose: 1000,
@@ -91,8 +92,7 @@ export default function Quiz() {
 
   return (
     <>
-    <LandingLayout>
-        {/* <Navbar timer={true} /> */}
+        <Navbar timer={true} />
             <div className="px-4 flex flex-col justify-center items-center h-screen">
                 <h1 className="text-3xl font-bold my-4">Qwis {questionDone.length}</h1>
                 <div>
@@ -104,7 +104,7 @@ export default function Quiz() {
                             {
                                 currQuestion && currQuestion.option.map(option => {
                                     return (
-                                        <label key={option.id} className="flex items-center cursor-pointer">
+                                        <label key={option.id} className="flex my-2 max-w-96 p-4 bg-secondary rounded-lg items-center cursor-pointer">
                                         <input
                                             type="radio"
                                             className="form-checkbox h-5 w-5 text-blue-600"
@@ -113,7 +113,7 @@ export default function Quiz() {
                                             checked= {option.id === selectedAnswerId}
                                             onChange={() => {setSelectedAnswerId(option.id)}}
                                         />
-                                        <span className="ml-2 text-lg">{option.answer}</span>
+                                        <span className="ml-2 text-xl">{option.answer}</span>
                                         </label>
                                     )
                                 })
@@ -130,12 +130,11 @@ export default function Quiz() {
                 </div> 
 
                 <div>
-                    <h1 className="text-1xl">Corrrect Answers: {currentScore}</h1>
+                    <h1 className="text-1xl">Total Score: {score}</h1>
                 </div>
                 <ToastContainer />
             </div>
-        {/* <Footer /> */}
-    </LandingLayout>
+        <Footer />
     </>
   )
 }

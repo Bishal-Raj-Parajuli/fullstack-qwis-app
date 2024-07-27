@@ -1,5 +1,3 @@
-import Navbar from '../components/common/Navbar'
-import Footer from '../components/common/Footer'
 import { Link, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { ICategory } from '../types';
