@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { ICategory, IQuestion } from "../types";
 import { useEffect, useState } from "react";
 import Navbar from "../components/common/Navbar";
@@ -11,11 +11,12 @@ import { FaHome } from "react-icons/fa";
 
 export default function Quiz() {
     const {id} = useParams<{id: string}>()
+    const navigate = useNavigate();
     const [category, setCategory] = useState<ICategory | null>(null);
     const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
     const [questionDone, setQuestionDone] = useState<number[]>([])
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
-    const {score ,increaseScore} = useQwisScore();
+    const {score ,setDefaultScore,increaseScore} = useQwisScore();
     const {timerStatus} = useQwisStatus();
 
     useEffect(() => {
@@ -95,32 +96,55 @@ export default function Quiz() {
         }
     }
 
+    // "id": 11, "name": userName, "points": score, "profileImg": "https://randomuser.me/api/portraits/women/1.jpg", "country": userCountry
+
+
     const saveUserData = async () => {
+        const apiUrl = 'http://localhost:3000/User'
         const userName = localStorage.getItem('userName')
         const userCountry = localStorage.getItem('country')
+        const userId = localStorage.getItem('userId')
 
         // Post data to json-server
         try {
-          const response = await fetch("http://localhost:3000/User", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                "id": 11, "name": userName, "points": score, "profileImg": "https://randomuser.me/api/portraits/women/1.jpg", "country": userCountry
-            }),
-          });
-    
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
+            // Step 1: Fetch the data
+            const response = await fetch(`${apiUrl}/${userId}`);
+        
+            if (response.ok) {
+              // Data exists, perform PUT request to update
+              const updateResponse = await fetch(`${apiUrl}/${userId}`, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "id": userId, "name": userName, "points": score, "country": userCountry
+                }),
+              });
+              const updatedData = await updateResponse.json();
+              console.log('Updated data:', updatedData);
+            } else {
+              // Data does not exist, perform POST request to create
+              const createResponse = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "id": userId, "name": userName, "points": score, "country": userCountry
+                }),
+              });
+              const createdData = await createResponse.json();
+              console.log('Created data:', createdData);
+            }
+          } catch (error) {
+            console.error('Error:', error);
           }
-    
-          const data = await response.json();
-          console.log("Posted data:", data);
+      };
 
-        } catch (error) {
-          console.error("Error posting data:", error);
-        }
+      function cleanup(){
+        setDefaultScore();
+        navigate('/');
       };
 
   return (
@@ -173,7 +197,7 @@ export default function Quiz() {
             !timerStatus &&  <Modal>
                 <h1 className="text-3xl">Time's Up !!</h1>
                 <p>Your Score: {score}</p>
-                <Link to={'/'}><Button><FaHome className="mr-2" /> Home</Button></Link>
+                <Button onClick={cleanup}><FaHome className="mr-2" /> Home</Button>
              </Modal>
         }
        

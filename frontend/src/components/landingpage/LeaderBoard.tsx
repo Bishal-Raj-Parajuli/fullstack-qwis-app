@@ -26,11 +26,7 @@ export default function LeaderBoard() {
                 return <LeaderBoardCard key={user.id} user={user} rank={i+1} />
               })
 
-            }
-
-            
-            
-            
+            }      
         </div>
     </section>
   )

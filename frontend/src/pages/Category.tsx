@@ -1,10 +1,11 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { ChangeEvent, useEffect, useState } from 'react';
 import { ICategory } from '../types';
 import Button from '../components/ui/Button';
 import Logo from '../assets/logo-text.png';
 import LandingLayout from '../layouts/LandingLayout';
 import Modal from '../components/ui/Modal';
+import RandomHash from '../utils/RandomHash';
 
 export default function Category() {
 
@@ -29,6 +30,7 @@ export default function Category() {
       const handleSubmit = () => {
         localStorage.setItem('userName', userFormData.userName)
         localStorage.setItem('country', userFormData.country)
+        localStorage.setItem('userId', RandomHash())
         navigate(`/qwis/${id}`)
       }
 

@@ -14,7 +14,7 @@ export default function CategoryCard({cardDetail}: Props) {
             <h2 className="text-xl font-bold">#{cardDetail.category}</h2>
         </div>
         <p className="">
-            Blitz Time: {cardDetail.blitzTime} min
+            Blitz Time: 2 min
         </p>
     </div>
     </Link>
