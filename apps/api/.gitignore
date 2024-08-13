@@ -25,4 +25,5 @@ dist-ssr
 .vercel
 
 drizzle
+migrations
 *.db
