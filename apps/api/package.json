@@ -17,16 +17,21 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:migrate": "drizzle-kit migrate"
   },
   "dependencies": {
-    "@qwis/ts-rest": "*",
+    "@libsql/client": "^0.9.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
     "@nestjs/platform-express": "^10.0.0",
+    "@qwis/ts-rest": "*",
     "@ts-rest/next": "^3.49.3",
+    "drizzle-orm": "^0.33.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
@@ -38,6 +43,7 @@
     "@types/supertest": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
+    "drizzle-kit": "^0.24.0",
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",

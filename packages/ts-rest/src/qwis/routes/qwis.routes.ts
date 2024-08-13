@@ -28,7 +28,7 @@ export const qwisRoutes = {
       method: 'GET',
       path: '/category/:categoryId',
       pathParams: z.object({
-        categoryId: z.string().uuid(),
+        categoryId: z.number(),
       }),
       responses: {
         200: zgetCategoryByIdRes,
