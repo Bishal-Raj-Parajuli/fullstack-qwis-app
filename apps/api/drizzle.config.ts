@@ -1,10 +1,13 @@
 import { defineConfig } from 'drizzle-kit';
+import { config } from 'dotenv';
+
+config();
 
 export default defineConfig({
   dialect: 'sqlite',
   schema: './db/schema.ts',
   out: './db/migrations',
   dbCredentials: {
-    url: './db/database.db',
+    url: 'database.db',
   },
 });
