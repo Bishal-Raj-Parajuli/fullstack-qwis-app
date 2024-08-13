@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import LeaderBoardCard from "../ui/LeaderBoardCard";
 import { IUser } from "../../types";
+import useApiStore from "../../stores/api.store";
 
 
 export default function LeaderBoard() {
 
   const[users, setUsers] = useState<IUser[] | null>(null)
+  const { apiUrl } = useApiStore();
 
   useEffect(() => {
-    fetch("http://localhost:3000/User")
+    fetch(`${apiUrl}/user`)
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(err => console.error(err))

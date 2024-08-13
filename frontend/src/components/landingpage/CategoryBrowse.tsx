@@ -1,14 +1,16 @@
 import { ICategory } from "../../types.ts";
 import CategoryCard from "../ui/CategoryCard.tsx"
 import { useEffect, useState } from "react";
+import useApiStore from "../../stores/api.store.ts";
 
 
 export default function CategoryBrowse() {
 
+  const { apiUrl } = useApiStore();
   const[categories, setCategories] = useState<ICategory[] | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/categories")
+    fetch(`${apiUrl}/categories`)
       .then((response) => {
           return response.json();
       })

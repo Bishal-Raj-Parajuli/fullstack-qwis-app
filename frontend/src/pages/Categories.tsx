@@ -5,13 +5,15 @@ import { ICategory } from '../types';
 import CategoryCard from '../components/ui/CategoryCard';
 import SearchBar from '../components/ui/SearchBar';
 import MainContentWrapper from '../components/common/MainContentWrapper';
+import useApiStore from '../stores/api.store';
 
 export default function Categories() {
 
 const[categories, setCategories] = useState<ICategory[] | null>(null);
+const { apiUrl } = useApiStore();
 
   useEffect(() => {
-    fetch("http://localhost:3000/categories")
+    fetch(`${apiUrl}/categories`)
       .then((response) => {
           return response.json();
       })

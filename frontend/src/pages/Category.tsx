@@ -6,6 +6,7 @@ import Logo from '../assets/logo-text.png';
 import LandingLayout from '../layouts/LandingLayout';
 import Modal from '../components/ui/Modal';
 import RandomHash from '../utils/RandomHash';
+import useApiStore from '../stores/api.store';
 
 export default function Category() {
 
@@ -13,6 +14,7 @@ export default function Category() {
     const [category, setCategory] = useState<ICategory | null>(null);
     const [userFormModal, setUserFormModal] = useState(false);
     const navigate = useNavigate();
+    const { apiUrl } = useApiStore();
 
     const [userFormData, setUserFormData] = useState({
         userName: '',
@@ -35,7 +37,7 @@ export default function Category() {
       }
 
     useEffect(() => {
-        fetch(`http://localhost:3000/categories/${id}`)
+        fetch(`${apiUrl}/categories/${id}`)
             .then(response => response.json())
             .then(data => {
                 setCategory(data)})

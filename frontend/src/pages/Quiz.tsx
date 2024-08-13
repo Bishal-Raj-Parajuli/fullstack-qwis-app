@@ -8,6 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import {useQwisScore, useQwisStatus} from "../stores/QwisScore";
 import Modal from "../components/ui/Modal";
 import { FaHome } from "react-icons/fa";
+import useApiStore from "../stores/api.store";
 
 export default function Quiz() {
     const {id} = useParams<{id: string}>()
@@ -18,9 +19,10 @@ export default function Quiz() {
     const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
     const {score ,setDefaultScore,increaseScore} = useQwisScore();
     const {timerStatus} = useQwisStatus();
+    const { apiUrl } = useApiStore();
 
     useEffect(() => {
-        fetch(`http://localhost:3000/categories/${id}`)
+        fetch(`${apiUrl}/categories/${id}`)
             .then(response => response.json())
             .then(data => {
                 setCategory(data)  
@@ -100,7 +102,6 @@ export default function Quiz() {
 
 
     const saveUserData = async () => {
-        const apiUrl = 'http://localhost:3000/User'
         const userName = localStorage.getItem('userName')
         const userCountry = localStorage.getItem('country')
         const userId = localStorage.getItem('userId')
@@ -108,11 +109,11 @@ export default function Quiz() {
         // Post data to json-server
         try {
             // Step 1: Fetch the data
-            const response = await fetch(`${apiUrl}/${userId}`);
+            const response = await fetch(`${apiUrl}/user/${userId}`);
         
             if (response.ok) {
               // Data exists, perform PUT request to update
-              const updateResponse = await fetch(`${apiUrl}/${userId}`, {
+              const updateResponse = await fetch(`${apiUrl}/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
@@ -125,7 +126,7 @@ export default function Quiz() {
               console.log('Updated data:', updatedData);
             } else {
               // Data does not exist, perform POST request to create
-              const createResponse = await fetch(apiUrl, {
+              const createResponse = await fetch(`${apiUrl}/user`, {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
