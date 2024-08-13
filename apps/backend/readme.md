@@ -4,4 +4,4 @@
 
 ### Deploy in Vercel
 
-> ~ vercel 
+> ~ vercel

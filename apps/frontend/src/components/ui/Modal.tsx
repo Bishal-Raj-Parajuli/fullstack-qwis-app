@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface Props {
   closeButton?: boolean;
@@ -6,8 +6,7 @@ interface Props {
 }
 
 export default function Modal({ children, closeButton = false }: Props) {
-
-//   #TODO: Make a unmount function because when the modal is closed the parent state might not be updated
+  //   #TODO: Make a unmount function because when the modal is closed the parent state might not be updated
 
   const [isModalOpen, setIsModalOpen] = useState(true);
 
