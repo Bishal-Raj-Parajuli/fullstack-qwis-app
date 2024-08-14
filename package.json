@@ -6,7 +6,8 @@
     "dev": "turbo dev",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "npm run drizzle:generate --workspace=api",
-    "db:migrate": "npm run drizzle:migrate --workspace=api"
+    "db:migrate": "npm run drizzle:migrate --workspace=api",
+    "db:seed": "npm run drizzle:seed --workspace=api"
   },
   "devDependencies": {
     "drizzle-kit": "^0.24.0",
