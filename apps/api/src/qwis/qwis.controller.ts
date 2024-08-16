@@ -3,7 +3,7 @@ import { QwisService } from './qwis.service';
 import { tsRestHandler, TsRestHandler } from '@ts-rest/nest';
 import { API } from '@qwis/ts-rest';
 
-@Controller('qwis')
+@Controller()
 export class QwisController {
   constructor(private readonly qwisService: QwisService) {}
 

@@ -24,3 +24,10 @@ export interface IUser {
   profileImg: string;
   country: string;
 }
+
+export interface IUserList {
+  id: number;
+  userName: string;
+  totalPoint: number;
+  country: string;
+}

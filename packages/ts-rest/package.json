@@ -2,7 +2,10 @@
   "name": "@qwis/ts-rest",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "types": "./dist/index.ts",
+      "default": "./dist/index.js"
+    }
   },
   "scripts": {
     "build": "tsc",
