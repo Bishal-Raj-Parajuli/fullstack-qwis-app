@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
 import LeaderBoardCard from '../ui/LeaderBoardCard';
-import { IUser } from '../../types';
-import useApiStore from '../../stores/api.store';
+import { useListUsers } from '../hooks/useUserApi';
 
 export default function LeaderBoard() {
-  const [users, setUsers] = useState<IUser[] | null>(null);
-  const { apiUrl } = useApiStore();
+  // const [users, setUsers] = useState<IUser[] | null>(null);
+  // const { apiUrl } = useApiStore();
+  const {data: response} = useListUsers();
 
-  useEffect(() => {
-    fetch(`${apiUrl}/user`)
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((err) => console.error(err));
-  }, []);
+  const userList = response?.status === 200 ? response.body.data : [];
+
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/user`)
+  //     .then((response) => response.json())
+  //     .then((data) => setUsers(data))
+  //     .catch((err) => console.error(err));
+  // }, []);
 
   return (
     <section className="my-6 mx-4">
@@ -22,9 +23,9 @@ export default function LeaderBoard() {
       </p>
 
       <div className="my-4 sm:grid sm:grid-cols-2 sm:grid-flow-row *:m-2">
-        {users &&
-          users
-            .sort((a, b) => b.points - a.points)
+        {userList &&
+          userList
+            .sort((a, b) => b.totalPoint - a.totalPoint)
             .slice(0, 5)
             .map((user, i) => {
               return <LeaderBoardCard key={user.id} user={user} rank={i + 1} />;

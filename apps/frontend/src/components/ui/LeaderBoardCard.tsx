@@ -1,8 +1,8 @@
-import { IUser } from '../../types';
+import { IUserList } from '../../types';
 import { IoIosPerson } from 'react-icons/io';
 
 interface Props {
-  user: IUser;
+  user: IUserList;
   rank: number;
 }
 
@@ -15,9 +15,9 @@ export default function LeaderBoardCard({ user, rank }: Props) {
       </span>
       <span>
         <p className="font-semibold text-sm">
-          {user.name} ({user.country})
+          {user.userName} ({user.country})
         </p>
-        <p className="text-xs">Score: {user.points}</p>
+        <p className="text-xs">Score: {user.totalPoint}</p>
       </span>
       <span className="text-sm">#{rank}</span>
     </div>
