@@ -17,14 +17,14 @@ const zcreateUserReq = z.object({
 
 const zcreateUserRes = z.object({
   status: z.literal('OK'),
-  data: z.array(zUser),
+  data: zUser,
 });
 
 export const userRoutes = {
   routes: c.router({
     getUserList: {
       method: 'GET',
-      path: '/users',
+      path: '/user',
       responses: {
         200: zgetUserListRes,
       },

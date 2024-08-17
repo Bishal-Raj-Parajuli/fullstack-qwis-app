@@ -1,8 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { dbAsyncProvider } from 'db/db.provider';
 import { BetterSQLite3Database } from 'drizzle-orm/better-sqlite3';
-import { users } from 'db/schema';
+import { category, users } from 'db/schema';
 import * as schema from 'db/schema';
+import { User } from '@qwis/ts-rest';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class QwisService {
@@ -14,5 +16,23 @@ export class QwisService {
   async getUserList() {
     const userList = await this.db.select().from(users).all();
     return userList;
+  }
+
+  async createUser(user: Omit<User, 'id'>) {
+    const arr = await this.db.insert(users).values(user).returning();
+    return arr[0];
+  }
+
+  async getCategoryList() {
+    const arr = await this.db.select().from(category).all();
+    return arr;
+  }
+
+  async getCategoryById(id: number) {
+    const arr = await this.db
+      .select()
+      .from(category)
+      .where(eq(category.id, id));
+    return arr[0];
   }
 }

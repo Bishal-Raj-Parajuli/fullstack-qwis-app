@@ -1,27 +1,12 @@
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
-import { useEffect, useState } from 'react';
-import { ICategory } from '../types';
 import CategoryCard from '../components/ui/CategoryCard';
 import SearchBar from '../components/ui/SearchBar';
 import MainContentWrapper from '../components/common/MainContentWrapper';
-import useApiStore from '../stores/api.store';
+import { useGetCategoryList } from '../hooks/useCategoryApi';
 
 export default function Categories() {
-  const [categories, setCategories] = useState<ICategory[] | null>(null);
-  const { apiUrl } = useApiStore();
-
-  useEffect(() => {
-    fetch(`${apiUrl}/categories`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
+  const { data: categoryList } = useGetCategoryList();
   return (
     <>
       <Navbar />
@@ -32,8 +17,8 @@ export default function Categories() {
         </p>
         <SearchBar />
         <div className="p-4 text-accent grid min-[580px]:grid-cols-2 min-[930px]:grid-cols-3 min-[1200px]:grid-cols-4 gap-4 place-content-center">
-          {categories &&
-            categories.map((data) => {
+          {categoryList &&
+            categoryList.map((data) => {
               return <CategoryCard key={data.id} cardDetail={data} />;
             })}
         </div>

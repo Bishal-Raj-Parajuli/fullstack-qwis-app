@@ -1,10 +1,10 @@
 import LeaderBoardCard from '../ui/LeaderBoardCard';
-import { useListUsers } from '../hooks/useUserApi';
+import { useListUsers } from '../../hooks/useUserApi';
 
 export default function LeaderBoard() {
   // const [users, setUsers] = useState<IUser[] | null>(null);
   // const { apiUrl } = useApiStore();
-  const {data: response} = useListUsers();
+  const { data: response } = useListUsers();
 
   const userList = response?.status === 200 ? response.body.data : [];
 
