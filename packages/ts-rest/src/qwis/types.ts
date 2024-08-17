@@ -22,7 +22,6 @@ export const zQuestion = z.object({
   id: z.number(),
   categoryId: z.number(),
   title: z.string(),
-  correctAnswer: z.number(),
 });
 
 export type Question = z.infer<typeof zQuestion>;
@@ -31,6 +30,7 @@ export const zOption = z.object({
   id: z.number(),
   questionId: z.number(),
   answer: z.string(),
+  correctAnswer: z.boolean(),
 });
 
 export type Option = z.infer<typeof zOption>;

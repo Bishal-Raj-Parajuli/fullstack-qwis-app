@@ -1,6 +1,6 @@
 import { initContract } from '@ts-rest/core';
 import z, { number } from 'zod';
-import { zCategory } from '../types';
+import { zCategory, zOption, zQuestion } from '../types';
 
 const c = initContract();
 
@@ -35,5 +35,31 @@ export const qwisRoutes = {
       },
       summary: 'Get Category',
     },
+    getQuestionListByCategoryId: {
+      method: 'GET',
+      path: '/:categoryId/question',
+      pathParams: z.object({ 
+        categoryId: z.coerce.number()
+      }),
+      responses: {
+        200: z.object({
+          data: z.array(zQuestion)
+        }) 
+      },
+      summary: 'Get question List by category Id',
+    },
+    getOptionByQuestioId: {
+      method: 'GET',
+      path: '/:questionId/options',
+      pathParams: z.object({
+        questionId: z.coerce.number()
+      }),
+      responses: {
+        200: z.object({
+          data: z.array(zOption)
+        })
+      },
+      summary: 'Get option by Question Id',
+    }
   }),
 };
