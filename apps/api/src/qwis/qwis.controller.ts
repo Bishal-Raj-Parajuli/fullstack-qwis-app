@@ -82,4 +82,37 @@ export class QwisController {
       };
     });
   }
+
+  @TsRestHandler(API.Qwis.getQuestionListByCategoryId)
+  async getQuestionListByCategoryId(){
+    return tsRestHandler(API.Qwis.getQuestionListByCategoryId, async ({params}) => {
+      const questionList = await this.qwisService.getQuestionByCategoryId(params.categoryId)
+      if(!questionList){
+        throw new HttpException('Question Not Found', HttpStatus.NOT_FOUND);
+      }
+      return {
+        status: 200,
+        body: {
+          data: questionList,
+        }
+      }
+    })
+  }
+
+  @TsRestHandler(API.Qwis.getOptionByQuestioId)
+  async getOptionByQuestionId(){
+    return tsRestHandler(API.Qwis.getOptionByQuestioId, async ({params}) => {
+      const optionList = await this.qwisService.getOptionByQuestionId(params.questionId)
+      if(!optionList){
+        throw new HttpException('Option Not Found', HttpStatus.NOT_FOUND);
+      }
+      return {
+        status: 200,
+        body: {
+          data: optionList
+        }
+      }
+    })
+  }
+
 }
