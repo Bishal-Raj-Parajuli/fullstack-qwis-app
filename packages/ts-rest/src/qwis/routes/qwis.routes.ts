@@ -1,5 +1,5 @@
 import { initContract } from '@ts-rest/core';
-import z from 'zod';
+import z, { number } from 'zod';
 import { zCategory } from '../types';
 
 const c = initContract();
@@ -18,7 +18,7 @@ export const qwisRoutes = {
   routes: c.router({
     getCategoryList: {
       method: 'GET',
-      path: '/categories',
+      path: '/category',
       responses: {
         200: zgetCategoryListRes,
       },
@@ -28,7 +28,7 @@ export const qwisRoutes = {
       method: 'GET',
       path: '/category/:categoryId',
       pathParams: z.object({
-        categoryId: z.number(),
+        categoryId: z.coerce.number(),
       }),
       responses: {
         200: zgetCategoryByIdRes,

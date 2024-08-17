@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ICategory } from '../../types';
+import { Category } from '@qwis/ts-rest';
 
 interface Props {
-  cardDetail: ICategory;
+  cardDetail: Category;
 }
 
 export default function CategoryCard({ cardDetail }: Props) {
@@ -13,7 +13,7 @@ export default function CategoryCard({ cardDetail }: Props) {
         className="p-6 w-64 flex flex-col items-center  bg-background text-black border-2 border-accent rounded-lg shadow-md flex-shrink-0"
       >
         <div className=" flex flex-col items-center mb-4">
-          <h2 className="text-xl font-bold">#{cardDetail.category}</h2>
+          <h2 className="text-xl font-bold">#{cardDetail.categoryName}</h2>
         </div>
         <p className="">Blitz Time: 2 min</p>
       </div>
