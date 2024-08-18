@@ -23,14 +23,21 @@ export class QwisService {
     return arr[0];
   }
 
-  async getUserById(userId: number){
+  async getUserById(userId: number) {
     const user = await this.db.select().from(users).where(eq(users.id, userId));
     return user[0];
   }
 
-  async updateUser(userId: number, data: Omit<User, 'id' | 'userName' | 'country'>){
-    const arr = await this.db.update(users).set(data).where(eq(users.id, userId)).returning({ userId: users.id });
-    return this.getUserById(arr[0].userId)
+  async updateUser(
+    userId: number,
+    data: Omit<User, 'id' | 'userName' | 'country'>,
+  ) {
+    const arr = await this.db
+      .update(users)
+      .set(data)
+      .where(eq(users.id, userId))
+      .returning({ userId: users.id });
+    return this.getUserById(arr[0].userId);
   }
 
   async getCategoryList() {
@@ -46,16 +53,19 @@ export class QwisService {
     return arr[0];
   }
 
-  async getQuestionByCategoryId(id: number){
-    const arr = await this.db.select().from(question).where(eq(question.categoryId, id));
+  async getQuestionByCategoryId(id: number) {
+    const arr = await this.db
+      .select()
+      .from(question)
+      .where(eq(question.categoryId, id));
     return arr;
   }
 
-  async getOptionByQuestionId(id: number){
-    const arr = await this.db.select().from(option).where(eq(option.questionId, id));
+  async getOptionByQuestionId(id: number) {
+    const arr = await this.db
+      .select()
+      .from(option)
+      .where(eq(option.questionId, id));
     return arr;
   }
-
-
-
 }

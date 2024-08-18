@@ -31,24 +31,30 @@ export const useCreateUser = () => {
     },
     onError: (err) => console.error(err),
   });
-}
+};
 
 export const useUpdateUserData = () => {
   return useMutation({
-      mutationFn: async({id, data}: {id: number; data: { totalPoint: number }}) => {
-        const resp = await apiClient.api.User.updateUser({
-          params: {
-            userId: id,
-          },
-          body: {
-            totalPoint: data.totalPoint
-          }
-        })
-        if(resp.status !== 200){
-          throw new Error('Something went wrong while updating data')
-        }
-        return resp.body.data
-      },
-      onError: (err) => console.error(err)
-  })
-}
+    mutationFn: async ({
+      id,
+      data,
+    }: {
+      id: number;
+      data: { totalPoint: number };
+    }) => {
+      const resp = await apiClient.api.User.updateUser({
+        params: {
+          userId: id,
+        },
+        body: {
+          totalPoint: data.totalPoint,
+        },
+      });
+      if (resp.status !== 200) {
+        throw new Error('Something went wrong while updating data');
+      }
+      return resp.body.data;
+    },
+    onError: (err) => console.error(err),
+  });
+};

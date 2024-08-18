@@ -48,22 +48,23 @@ export class QwisController {
   }
 
   @TsRestHandler(API.User.updateUser)
-  async updateUser(){
-    return tsRestHandler(API.User.updateUser, async ({params, body}) => {
-      const user = await this.qwisService.updateUser(params.userId, { totalPoint: body.totalPoint})
-      if(!user){
+  async updateUser() {
+    return tsRestHandler(API.User.updateUser, async ({ params, body }) => {
+      const user = await this.qwisService.updateUser(params.userId, {
+        totalPoint: body.totalPoint,
+      });
+      if (!user) {
         throw new error('Something Went wrong');
       }
-      return{
+      return {
         status: 200,
         body: {
           status: 'OK',
-          data: user
-        }
-      }
+          data: user,
+        },
+      };
     });
   }
-
 
   @TsRestHandler(API.Qwis.getCategoryList)
   async getCategoryList() {
@@ -102,35 +103,41 @@ export class QwisController {
   }
 
   @TsRestHandler(API.Qwis.getQuestionListByCategoryId)
-  async getQuestionListByCategoryId(){
-    return tsRestHandler(API.Qwis.getQuestionListByCategoryId, async ({params}) => {
-      const questionList = await this.qwisService.getQuestionByCategoryId(params.categoryId)
-      if(!questionList){
-        throw new HttpException('Question Not Found', HttpStatus.NOT_FOUND);
-      }
-      return {
-        status: 200,
-        body: {
-          data: questionList,
+  async getQuestionListByCategoryId() {
+    return tsRestHandler(
+      API.Qwis.getQuestionListByCategoryId,
+      async ({ params }) => {
+        const questionList = await this.qwisService.getQuestionByCategoryId(
+          params.categoryId,
+        );
+        if (!questionList) {
+          throw new HttpException('Question Not Found', HttpStatus.NOT_FOUND);
         }
-      }
-    })
+        return {
+          status: 200,
+          body: {
+            data: questionList,
+          },
+        };
+      },
+    );
   }
 
   @TsRestHandler(API.Qwis.getOptionByQuestioId)
-  async getOptionByQuestionId(){
-    return tsRestHandler(API.Qwis.getOptionByQuestioId, async ({params}) => {
-      const optionList = await this.qwisService.getOptionByQuestionId(params.questionId)
-      if(!optionList){
+  async getOptionByQuestionId() {
+    return tsRestHandler(API.Qwis.getOptionByQuestioId, async ({ params }) => {
+      const optionList = await this.qwisService.getOptionByQuestionId(
+        params.questionId,
+      );
+      if (!optionList) {
         throw new HttpException('Option Not Found', HttpStatus.NOT_FOUND);
       }
       return {
         status: 200,
         body: {
-          data: optionList
-        }
-      }
-    })
+          data: optionList,
+        },
+      };
+    });
   }
-
 }

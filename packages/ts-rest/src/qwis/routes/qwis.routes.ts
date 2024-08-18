@@ -38,13 +38,13 @@ export const qwisRoutes = {
     getQuestionListByCategoryId: {
       method: 'GET',
       path: '/:categoryId/question',
-      pathParams: z.object({ 
-        categoryId: z.coerce.number()
+      pathParams: z.object({
+        categoryId: z.coerce.number(),
       }),
       responses: {
         200: z.object({
-          data: z.array(zQuestion)
-        }) 
+          data: z.array(zQuestion),
+        }),
       },
       summary: 'Get question List by category Id',
     },
@@ -52,14 +52,14 @@ export const qwisRoutes = {
       method: 'GET',
       path: '/:questionId/options',
       pathParams: z.object({
-        questionId: z.coerce.number()
+        questionId: z.coerce.number(),
       }),
       responses: {
         200: z.object({
-          data: z.array(zOption)
-        })
+          data: z.array(zOption),
+        }),
       },
       summary: 'Get option by Question Id',
-    }
+    },
   }),
 };

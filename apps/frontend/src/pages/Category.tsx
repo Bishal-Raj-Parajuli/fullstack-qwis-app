@@ -12,7 +12,7 @@ export default function Category() {
   const { id } = useParams<{ id: string }>() as { id: string };
   const [userFormModal, setUserFormModal] = useState(false);
   const navigate = useNavigate();
-  const {data: response} = useListUsers();
+  const { data: response } = useListUsers();
   const userList = response?.status === 200 ? response.body.data : [];
   const createUser = useCreateUser();
   const { data: category, isLoading } = useGetGategoryById(parseInt(id));
@@ -30,7 +30,7 @@ export default function Category() {
   };
 
   const handleSubmit = async () => {
-    if(userFormData.country == " " || userFormData.userName == ""){
+    if (userFormData.country == ' ' || userFormData.userName == '') {
       toast.error('Sorry either you missed entering your name or country.', {
         position: 'top-center',
         autoClose: 1000,
@@ -41,12 +41,12 @@ export default function Category() {
         progress: undefined,
         theme: 'light',
       });
-    }else{
+    } else {
       const resp = await createUser.mutateAsync({
         userName: userFormData.userName,
         country: userFormData.country,
       });
-  
+
       localStorage.setItem('userId', resp.id.toString());
       localStorage.setItem('userName', resp.userName);
       localStorage.setItem('country', resp.country);
@@ -56,12 +56,11 @@ export default function Category() {
 
   function startQwis(id: number) {
     const userId = localStorage.getItem('userId');
-    const userData = userId && userList.find(v => v.id != parseInt(userId))
-    console.log(!userData)
-    if (!userData){
+    const userData = userId && userList.find((v) => v.id != parseInt(userId));
+    console.log(!userData);
+    if (!userData) {
       setUserFormModal(true);
-    }
-    else {
+    } else {
       navigate(`/qwis/${id}`);
     }
   }
