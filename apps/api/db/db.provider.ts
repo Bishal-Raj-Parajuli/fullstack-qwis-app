@@ -10,7 +10,7 @@ export const dbProvider = [
   {
     provide: dbAsyncProvider,
     useFactory: async () => {
-      const sqlite = new Database('database.db');
+      const sqlite = new Database(process.env.DB_URL);
       const db = drizzle(sqlite, { schema });
       return db;
     },

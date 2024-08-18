@@ -56,8 +56,7 @@ export default function Category() {
 
   function startQwis(id: number) {
     const userId = localStorage.getItem('userId');
-    const userData = userId && userList.find((v) => v.id != parseInt(userId));
-    console.log(!userData);
+    const userData = userId && userList.find((v) => v.id === parseInt(userId));
     if (!userData) {
       setUserFormModal(true);
     } else {
