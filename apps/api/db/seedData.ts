@@ -1,7 +1,7 @@
 const dummyData = {
   userData: {
-    userName: 'Bishal Raj Parajuli',
-    totalPoint: 100,
+    userName: 'Ram Thapa',
+    totalPoint: 40,
     country: 'Nepal',
   },
   category: [

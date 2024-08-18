@@ -47,6 +47,24 @@ export class QwisController {
     });
   }
 
+  @TsRestHandler(API.User.updateUser)
+  async updateUser(){
+    return tsRestHandler(API.User.updateUser, async ({params, body}) => {
+      const user = await this.qwisService.updateUser(params.userId, { totalPoint: body.totalPoint})
+      if(!user){
+        throw new error('Something Went wrong');
+      }
+      return{
+        status: 200,
+        body: {
+          status: 'OK',
+          data: user
+        }
+      }
+    });
+  }
+
+
   @TsRestHandler(API.Qwis.getCategoryList)
   async getCategoryList() {
     return tsRestHandler(API.Qwis.getCategoryList, async () => {

@@ -20,6 +20,15 @@ const zcreateUserRes = z.object({
   data: zUser,
 });
 
+const zUpdateUserRes = z.object({
+  status: z.literal('OK'),
+  data: zUser,
+})
+
+const zUpdateUserReq = z.object({
+  totalPoint: z.number()
+})
+
 export const userRoutes = {
   routes: c.router({
     getUserList: {
@@ -39,5 +48,16 @@ export const userRoutes = {
       },
       summary: 'Create user',
     },
+    updateUser: {
+      method: 'PUT',
+      path: '/user/:userId',
+      pathParams: z.object({
+        userId: z.coerce.number()
+      }),
+      body: zUpdateUserReq,
+      responses: {
+        200: zUpdateUserRes
+      }
+    }
   }),
 };

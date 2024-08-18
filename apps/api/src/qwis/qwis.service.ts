@@ -23,6 +23,16 @@ export class QwisService {
     return arr[0];
   }
 
+  async getUserById(userId: number){
+    const user = await this.db.select().from(users).where(eq(users.id, userId));
+    return user[0];
+  }
+
+  async updateUser(userId: number, data: Omit<User, 'id' | 'userName' | 'country'>){
+    const arr = await this.db.update(users).set(data).where(eq(users.id, userId)).returning({ userId: users.id });
+    return this.getUserById(arr[0].userId)
+  }
+
   async getCategoryList() {
     const arr = await this.db.select().from(category).all();
     return arr;
@@ -45,5 +55,7 @@ export class QwisService {
     const arr = await this.db.select().from(option).where(eq(option.questionId, id));
     return arr;
   }
+
+
 
 }

@@ -35,7 +35,7 @@ const main = async () => {
           await db.insert(option).values({
             questionId: listQuestion[0].id,
             answer: opt.answer,
-            correctAnswer: opt.answer,
+            correctAnswer: opt.correct,
           });
         }
       }

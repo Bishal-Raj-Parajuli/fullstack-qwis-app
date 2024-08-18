@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { ICategory, IQuestion } from '../types';
 import { useEffect, useState } from 'react';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
@@ -9,30 +8,34 @@ import { useQwisScore, useQwisStatus } from '../stores/QwisScore';
 import Modal from '../components/ui/Modal';
 import { FaHome } from 'react-icons/fa';
 import useApiStore from '../stores/api.store';
+import { useGetOptionList, useGetQuestionList } from '../hooks/useQwisApi';
+import { Option, Question } from '@qwis/ts-rest';
+import { useUpdateUserData } from '../hooks/useUserApi';
 
-export default function Quiz() {
-  const { id } = useParams<{ id: string }>();
+export default function QuizOld() {
+  const { id } = useParams<{ id: string }>() as { id: string};
   const navigate = useNavigate();
-  const [category, setCategory] = useState<ICategory | null>(null);
-  const [currQuestion, setCurrQuestion] = useState<IQuestion | null>(null);
+  const [currQuestion, setCurrQuestion] = useState<Question | null>(null);
   const [questionDone, setQuestionDone] = useState<number[]>([]);
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>(null);
   const { score, setDefaultScore, increaseScore } = useQwisScore();
   const { timerStatus } = useQwisStatus();
   const { apiUrl } = useApiStore();
+  const {data: questionList} = useGetQuestionList(parseInt(id));
+  const [options, setOptions] = useState<Option[] | null>();
+  const { data: optionList, refetch: refetchOptions } = useGetOptionList(currQuestion?.id);
+  const updateUserData = useUpdateUserData();
 
   useEffect(() => {
-    fetch(`${apiUrl}/categories/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCategory(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+    if (questionList) {
+      setCurrentQuestion();
+    }
+  },[questionList]);
 
   useEffect(() => {
-    setCurrentQuestion();
-  }, [category]);
+    refetchOptions();
+  })
+
 
   useEffect(() => {
     if (!timerStatus) {
@@ -41,22 +44,21 @@ export default function Quiz() {
   }, [timerStatus]);
 
   function setCurrentQuestion() {
-    if (category) {
+    if (questionList) {
       let newQuestion;
       let index;
       do {
-        ({ obj: newQuestion, index } = getRandomElement(category.questions));
+        ({ obj: newQuestion, index } = getRandomElement(questionList));
       } while (
         questionDone.includes(index) &&
-        questionDone.length < category.questions.length
+        questionDone.length < 0
       );
-
-      if (questionDone.length === category.questions.length) {
+      
+      if (questionDone.length === questionList?.length) {
         // #TODO: All question is done end the game
         console.log('All questions have been done');
         return;
       }
-
       setQuestionDone((prev) => [...prev, index]);
       setCurrQuestion(newQuestion);
     }
@@ -64,7 +66,8 @@ export default function Quiz() {
 
   function checkAnswer() {
     if (selectedAnswerId) {
-      if (currQuestion?.correctAnswer === selectedAnswerId) {
+      console.log(optionList?.find(opt => opt.id === selectedAnswerId));
+      if (optionList?.find(opt => opt.id === selectedAnswerId)?.correctAnswer) {
         increaseScore();
         toast.success('Correct!', {
           position: 'bottom-center',
@@ -93,7 +96,7 @@ export default function Quiz() {
     setSelectedAnswerId(null);
   }
 
-  function getRandomElement(array: IQuestion[]) {
+  function getRandomElement(array: Question[]) {
     const randomIndex = Math.floor(Math.random() * array.length);
     return {
       obj: array[randomIndex],
@@ -101,51 +104,18 @@ export default function Quiz() {
     };
   }
 
-  // "id": 11, "name": userName, "points": score, "profileImg": "https://randomuser.me/api/portraits/women/1.jpg", "country": userCountry
-
   const saveUserData = async () => {
-    const userName = localStorage.getItem('userName');
-    const userCountry = localStorage.getItem('country');
     const userId = localStorage.getItem('userId');
-
-    // Post data to json-server
     try {
-      // Step 1: Fetch the data
-      const response = await fetch(`${apiUrl}/user/${userId}`);
-
-      if (response.ok) {
-        // Data exists, perform PUT request to update
-        const updateResponse = await fetch(`${apiUrl}/user/${userId}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: userId,
-            name: userName,
-            points: score,
-            country: userCountry,
-          }),
-        });
-        const updatedData = await updateResponse.json();
-        console.log('Updated data:', updatedData);
-      } else {
-        // Data does not exist, perform POST request to create
-        const createResponse = await fetch(`${apiUrl}/user`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: userId,
-            name: userName,
-            points: score,
-            country: userCountry,
-          }),
-        });
-        const createdData = await createResponse.json();
-        console.log('Created data:', createdData);
-      }
+    if(userId){
+      updateUserData.mutateAsync({
+        id: parseInt(userId),
+        data: {
+            totalPoint: score
+        }
+      })
+    }
+    // Post data to json-server
     } catch (error) {
       console.error('Error:', error);
     }
@@ -166,8 +136,7 @@ export default function Quiz() {
             <>
               <h1 className="text-2xl">{currQuestion.title}</h1>
               <div className="my-4 flex flex-col items-center">
-                {currQuestion &&
-                  currQuestion.option.map((option) => {
+                {optionList &&  optionList.map((option) => {
                     return (
                       <label
                         key={option.id}
@@ -202,7 +171,6 @@ export default function Quiz() {
         <div>
           <h1 className="text-1xl">Total Score: {score}</h1>
         </div>
-        <ToastContainer />
       </div>
       <Footer />
 

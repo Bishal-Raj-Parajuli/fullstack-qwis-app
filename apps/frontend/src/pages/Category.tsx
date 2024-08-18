@@ -4,16 +4,18 @@ import Button from '../components/ui/Button';
 import Logo from '../assets/logo-text.png';
 import LandingLayout from '../layouts/LandingLayout';
 import Modal from '../components/ui/Modal';
-import { useCreateUser } from '../hooks/useUserApi';
+import { useCreateUser, useListUsers } from '../hooks/useUserApi';
 import { useGetGategoryById } from '../hooks/useCategoryApi';
+import { toast } from 'react-toastify';
 
 export default function Category() {
   const { id } = useParams<{ id: string }>() as { id: string };
   const [userFormModal, setUserFormModal] = useState(false);
   const navigate = useNavigate();
+  const {data: response} = useListUsers();
+  const userList = response?.status === 200 ? response.body.data : [];
   const createUser = useCreateUser();
   const { data: category, isLoading } = useGetGategoryById(parseInt(id));
-
   const [userFormData, setUserFormData] = useState({
     userName: '',
     country: '',
@@ -28,21 +30,38 @@ export default function Category() {
   };
 
   const handleSubmit = async () => {
-    const resp = await createUser.mutateAsync({
-      userName: userFormData.userName,
-      country: userFormData.country,
-    });
-
-    localStorage.setItem('userName', resp.userName);
-    localStorage.setItem('country', resp.country);
-    navigate(`/qwis/${id}`);
+    if(userFormData.country == " " || userFormData.userName == ""){
+      toast.error('Sorry either you missed entering your name or country.', {
+        position: 'top-center',
+        autoClose: 1000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
+    }else{
+      const resp = await createUser.mutateAsync({
+        userName: userFormData.userName,
+        country: userFormData.country,
+      });
+  
+      localStorage.setItem('userId', resp.id.toString());
+      localStorage.setItem('userName', resp.userName);
+      localStorage.setItem('country', resp.country);
+      navigate(`/qwis/${id}`);
+    }
   };
 
   function startQwis(id: number) {
-    const userData = localStorage.getItem('userName');
-    if (!userData) {
+    const userId = localStorage.getItem('userId');
+    const userData = userId && userList.find(v => v.id != parseInt(userId))
+    console.log(!userData)
+    if (!userData){
       setUserFormModal(true);
-    } else {
+    }
+    else {
       navigate(`/qwis/${id}`);
     }
   }
