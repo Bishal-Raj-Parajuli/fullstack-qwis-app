@@ -6,7 +6,7 @@ import dummyData from './seedData';
 
 config();
 
-const sqlite = new Database(process.env.DB_URL);
+const sqlite = new Database('database.db');
 const db = drizzle(sqlite);
 
 const main = async () => {
