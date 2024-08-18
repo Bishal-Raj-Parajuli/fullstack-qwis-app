@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
+import { AppModule } from './src/app.module';
 import { generateOpenApi } from '@ts-rest/open-api';
 import { API } from '@qwis/ts-rest';
 import { SwaggerModule } from '@nestjs/swagger';
