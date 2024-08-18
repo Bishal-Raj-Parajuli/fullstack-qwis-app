@@ -24,7 +24,6 @@ dist-ssr
 *.sw?
 .vercel
 
-public
 drizzle
 migrations
 *.db
