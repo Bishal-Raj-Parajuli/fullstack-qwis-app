@@ -5,7 +5,7 @@ class APIClient {
   public api = initClient(
     { ...API },
     {
-      baseUrl: 'http://localhost:3001',
+      baseUrl: import.meta.env.VITE_API_URL,
       baseHeaders: {},
     },
   );
